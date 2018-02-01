@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'book_reviewer/book_reviewer.css' %}">
+
+</head>
+
+<body>
+    <div class="container p-3">
+        <div class="row">
+            <h1 class="col-8">Hello,<span class="purple">{{user.alias}}</span>!</h1>
+            <a href="/books/add"><button type="submit" name="choice" value="add" class="btn btn-link">Add Book and Review</button></a>    
+            <a href="/logout">
+                <button type="submit" name="choice" value="add" class="btn btn-danger">Log out</button>
+            </a>
+        </div>
+
+         {% if messages %} {% for message in messages %}
+        <div class="alert alert-danger">{{message}}</div>
+        {% endfor %} {% endif %}
+
+        <div class="col-6 d-inline-block align-top">
+            <h3>Recent Book Reviews:</h3>
+
+            {% for r in top3 %}
+                <a href="/books/{{r.book.id}}">
+                    <button type="submit" name="choice" value="view" class="btn btn-link title">{{r.book.title}}</button>
+                </a>
+                <div class="row ml-3">
+                    <p>Rating:</p>
+                    {% if r.stars == '1' %}
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                    {% elif r.stars == '2' %}
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                    {% elif r.stars == '3' %}
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                    {% elif r.stars == '4' %}
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                    {% elif r.stars == '5' %}
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                        <img class="star mr-1" src="{% static 'book_reviewer/star.png' %}">
+                    {% endif %}
+                </div>
+                <p class="ml-3"><a href="/users/{{r.reviewer.id}}">{{r.reviewer.name}}</a> says: {{r.review}}</p>
+                <p class="ml-3"><em>Posted on {{r.created_at}}</em></p>
+            {% endfor %}
+        </div>
+        <div class="col-4 d-inline-block border">
+            <h5>Other Books with Reviews:</h5>
+            <div id="scroll">
+                {% for rbooks in reviews %}
+                <a class="mb-2" href="/books/{{rbooks.book_id}}">{{rbooks.book__title}}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

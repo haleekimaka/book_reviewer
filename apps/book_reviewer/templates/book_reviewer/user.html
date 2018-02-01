@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Reviews</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'book_reviewer/book_reviewer.css' %}">
+
+</head>
+
+<body>
+    <div class="container p-3">
+        <div class="row text-right">
+            <a href="/books" class="col-8">
+                <button type="submit" name="choice" value="add" class="btn btn-link">Home</button>
+            </a>
+            <a href="/books/add">
+                <button type="submit" name="choice" value="add" class="btn btn-link">Add Book and Review</button>
+            </a>
+            <a href="/logout">
+                <button type="submit" name="choice" value="add" class="btn btn-danger">Log out</button>
+            </a>
+        </div>
+
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-danger">{{message}}</div>
+        {% endfor %} {% endif %}
+        <div class='row'>
+            <h3 class="mr-3">User Alias:</h3>
+            <h3 class="purple">{{user.alias}}</h3>
+        </div>
+        <div class='row'>
+            <h5 class="mr-3">Name:</h5>
+            <p>{{user.name}}</p>
+        </div>
+        <div class='row'>
+            <h5 class="mr-3">Email:</h5>
+            <p>{{user.email}}</p>
+        </div>
+        <div class="row">
+            <h5 class="mr-3">Total Reviews:</h5>
+            <p>{{count}}</p>
+        </div>
+        <br>
+
+        <h5>Posted Reviews on the following books:</h5>
+        {% for each in reviews %}
+        <a href="/books/{{each.book.id}}" class="title">{{each.book.title}}</a><br>
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>
